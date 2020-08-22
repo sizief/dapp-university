@@ -9,6 +9,7 @@ The transaction fee is gas_price * gas_needed. The transaction can be rejected (
 - [Truffle console](https://www.trufflesuite.com/docs/truffle/getting-started/interacting-with-your-contracts)
 - [Building Dapp](https://docs.openzeppelin.com/learn/building-a-dapp#starter-kit)
 - [wrting smart contract](https://docs.openzeppelin.com/learn/developing-smart-contract)
+
 ## Ethereum node
 - run geth: `geth --syncmode light --rpc` light is like prune mode in Bitcoin.
 - run testnet: `geth --syncmode light --testnet --rpc --allow-insecure-unlock console 2>> geth.log`
@@ -27,15 +28,17 @@ Then `solc --bin -o ./tmp/solcoutput Faucet.sol`
 
 ## Truffle
 - `truffle init`
-- `truffle create contract SOMETHING`
+- `truffle create contract Something`
 - `truffle compile`
-- Create migration file, run Ganache and then `truffle migrate --reset`
+- Create migration file (see Runners project), run Ganache and then `truffle migrate --reset`
 - `truffle console` to interact with the deployed contract
-- Inside console: `var instance = await ContractName.deployed()` or `var instance = await ContractName.new()` or `var instance = ContractName.at(address)`
+- Inside console: `var instance = await ContractName.deployed()` or `var instance = await ContractName.new()` or `var instance = await ContractName.at(address)`
 - And then `instance.address` or `var res = await instance.method()` because call is sync, and transaction is async
+- `var accounts = await web3.eth.getAccounts()` to ge tlist of all accounts
+- `let result = await instance.sendCoin(accounts[1], 10, {from: accounts[0]})` to send as another account (Also `web3.personal.unlockAccount(web3.personal.listAccounts[0], null, 60) ` use this on geth)
 - run `migrate` inside the cosole to compile and migrate
 - run `truffle console --network ropsten` and define `ropsten` network definition in truffle-config.js
+
 ## Questions
-- `public` prop means anyone can read/write?
-- what is constructors do?
 - what is memory keyword
+`Explicit data location for all variables of struct, array or mapping types is now mandatory` so when defining a var inside the method or at method definition, it should be like `bytes memory name` 
